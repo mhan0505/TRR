@@ -996,20 +996,27 @@ const questions = [
         difficulty: "medium",
         topic: "Equality vs Identity"
     },
-    {
-        id: 4,
-        question: "Kết quả của vòng lặp while sau là gì?",
-        options: [
-            "0 1 3 5 7 9",
-            "1 3 5 7 9",
-            "Vòng lặp vô hạn",
-            "0 1 3 5 7"
-        ],
-        correct: 1,
-        explanation: "count chỉ tăng khi chẵn, nên in ra các số lẻ.",
-        difficulty: "medium",
-        topic: "Loop / Control Flow"
-    },
+// ...existing code...
+{
+    id: 4,
+    question: `Kết quả của vòng lặp while sau là gì?
+<pre class="code-block">count = 0
+while count < 10:
+    if count % 2 == 0:
+        count += 1
+    print(count, end=' ')</pre>`,
+    options: [
+        "0 1 3 5 7 9",
+        "1 3 5 7 9",
+        "Vòng lặp vô hạn",
+        "0 1 3 5 7"
+    ],
+    correct: 1,
+    explanation: "count chỉ tăng khi chẵn, nên in ra các số lẻ.",
+    difficulty: "medium",
+    topic: "Loop / Control Flow"
+},
+// ...existing code...
     {
         id: 5,
         question: "Câu lệnh nào tạo ra một tuple trong Python?",
