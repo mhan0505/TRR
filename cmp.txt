@@ -1,0 +1,212 @@
+const questions = [
+    {
+        id: 1,
+        question: "What is the main purpose of Algorithm 5.1.8 for testing primality (kiểm tra số nguyên tố)?",
+        options: [
+            "To find all prime factors of a number",
+            "To check if a positive integer is prime by testing divisors from 2 to n-1",
+            "To generate prime numbers up to a given limit",
+            "To compute the greatest common divisor"
+        ],
+        correct: 1,
+        explanation: "Algorithm 5.1.8 tests whether a number is prime by checking if any integer from 2 to n-1 divides it.",
+        difficulty: "easy",
+        topic: "Prime Testing Implementation"
+    },
+    {
+        id: 2,
+        question: "What optimization can be made to Algorithm 5.1.8 to make it more efficient?",
+        options: [
+            "Test divisors only up to √n",
+            "Test only even divisors",
+            "Test divisors in random order",
+            "Test only prime numbers less than n"
+        ],
+        correct: 0,
+        explanation: "If n is composite, it must have a divisor ≤ √n, so checking only up to √n makes the algorithm much more efficient.",
+        difficulty: "medium",
+        topic: "Algorithm Optimization"
+    },
+    {
+        id: 3,
+        question: "When implementing number base conversion, what is a key challenge in converting between decimal, hexadecimal, and octal?",
+        options: [
+            "Handling negative numbers",
+            "Dealing with fractional parts",
+            "Managing the different digit representations (especially A-F in hexadecimal)",
+            "All of the above"
+        ],
+        correct: 3,
+        explanation: "Base conversion must handle negative numbers, fractional parts, and different digit systems, particularly the A-F digits in hexadecimal.",
+        difficulty: "medium",
+        topic: "Number Base Conversion"
+    },
+    {
+        id: 4,
+        question: "In binary addition, what is the correct result of 1101 + 1011?",
+        options: [
+            "10100",
+            "11000",
+            "10000",
+            "11100"
+        ],
+        correct: 1,
+        explanation: "1101 (13) + 1011 (11) = 11000 (24) in binary.",
+        difficulty: "easy",
+        topic: "Binary Arithmetic"
+    },
+    {
+        id: 5,
+        question: "What is a key advantage of Algorithm 5.2.16 (exponentiation by repeated squaring)?",
+        options: [
+            "It uses less memory",
+            "It computes exponents in O(log n) time instead of O(n)",
+            "It works only for prime exponents",
+            "It doesn't require multiplication"
+        ],
+        correct: 1,
+        explanation: "Repeated squaring reduces the time complexity from O(n) to O(log n) by halving the exponent at each step.",
+        difficulty: "hard",
+        topic: "Exponentiation Algorithms"
+    },
+    {
+        id: 6,
+        question: "In Algorithm 5.2.19 for modular exponentiation, why is it important to reduce modulo z at each step?",
+        options: [
+            "To make the algorithm faster",
+            "To prevent integer overflow and keep numbers small",
+            "To ensure the result is prime",
+            "To handle negative exponents"
+        ],
+        correct: 1,
+        explanation: "Reducing modulo z at each step prevents numbers from growing too large and causing integer overflow.",
+        difficulty: "medium",
+        topic: "Modular Exponentiation"
+    },
+    {
+        id: 7,
+        question: "What is a potential disadvantage of the recursive version of the Euclidean algorithm compared to the iterative version?",
+        options: [
+            "It's less efficient",
+            "It may cause stack overflow for very large inputs",
+            "It only works for prime numbers",
+            "It cannot compute the gcd of zero"
+        ],
+        correct: 1,
+        explanation: "Deep recursion for very large numbers can cause stack overflow, while the iterative version uses constant space.",
+        difficulty: "medium",
+        topic: "Algorithm Implementation"
+    },
+    {
+        id: 8,
+        question: "In Algorithm 5.3.10 (Extended Euclidean Algorithm), what additional information does it provide beyond the gcd?",
+        options: [
+            "The prime factors of a and b",
+            "The coefficients s and t in Bézout's identity: gcd(a,b) = s·a + t·b",
+            "The quotient and remainder of a/b",
+            "The modular inverse of a and b"
+        ],
+        correct: 1,
+        explanation: "The Extended Euclidean Algorithm computes both gcd(a,b) and the coefficients s, t satisfying gcd(a,b) = s·a + t·b.",
+        difficulty: "hard",
+        topic: "Extended Euclidean Algorithm"
+    },
+    {
+        id: 9,
+        question: "What condition must be satisfied for n to have an inverse modulo φ?",
+        options: [
+            "n must be prime",
+            "φ must be prime",
+            "gcd(n, φ) = 1",
+            "n < φ"
+        ],
+        correct: 2,
+        explanation: "The modular inverse exists if and only if gcd(n, φ) = 1.",
+        difficulty: "medium",
+        topic: "Modular Inverses"
+    },
+    {
+        id: 10,
+        question: "In RSA implementation, what is the relationship between the public key (n,z) and private key s?",
+        options: [
+            "n × s = z",
+            "n × s ≡ 1 (mod φ) where φ = (p-1)(q-1)",
+            "s = n mod z",
+            "n = s mod φ"
+        ],
+        correct: 1,
+        explanation: "The private key s is the modular inverse of n modulo φ, satisfying n × s ≡ 1 (mod φ).",
+        difficulty: "hard",
+        topic: "RSA Cryptosystem"
+    },
+    {
+        id: 11,
+        question: "What is a critical security consideration when implementing RSA?",
+        options: [
+            "The primes p and q must be kept secret",
+            "The public key must be changed frequently",
+            "The message must be shorter than z",
+            "Both A and C"
+        ],
+        correct: 3,
+        explanation: "The primes p and q must remain secret (as they allow computation of φ and thus the private key), and messages must be less than z for proper encryption.",
+        difficulty: "hard",
+        topic: "RSA Security"
+    },
+    {
+        id: 12,
+        question: "When adding hexadecimal numbers, what is the result of 1A + 2F?",
+        options: [
+            "45",
+            "49",
+            "4A",
+            "4F"
+        ],
+        correct: 1,
+        explanation: "1A (26) + 2F (47) = 49 (73) in hexadecimal.",
+        difficulty: "easy",
+        topic: "Hexadecimal Arithmetic"
+    },
+    {
+        id: 13,
+        question: "In octal addition, what is the result of 75 + 46?",
+        options: [
+            "143",
+            "133",
+            "123",
+            "153"
+        ],
+        correct: 0,
+        explanation: "75 (61) + 46 (38) = 143 (99) in octal.",
+        difficulty: "medium",
+        topic: "Octal Arithmetic"
+    },
+    {
+        id: 14,
+        question: "What is the key benefit of using repeated squaring for exponentiation?",
+        options: [
+            "It uses less code",
+            "It's easier to understand",
+            "It dramatically reduces the number of multiplications needed",
+            "It works for negative exponents"
+        ],
+        correct: 2,
+        explanation: "Repeated squaring reduces the number of multiplications from O(n) to O(log n), making it efficient for large exponents.",
+        difficulty: "medium",
+        topic: "Exponentiation Efficiency"
+    },
+    {
+        id: 15,
+        question: "In a recursive gcd implementation, what is the base case?",
+        options: [
+            "When a = b",
+            "When b = 0",
+            "When a = 1",
+            "When both numbers are prime"
+        ],
+        correct: 1,
+        explanation: "The base case is when b = 0, at which point gcd(a,0) = a.",
+        difficulty: "easy",
+        topic: "Recursive Algorithms"
+    }
+];

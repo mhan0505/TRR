@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "question": "Trong lý thuyết tập hợp, ký hiệu ∅ đại diện cho?",
+    "options": [
+      "Tập hợp tất cả các số nguyên",
+      "Tập hợp rỗng",
+      "Tập hợp các số dương",
+      "Tập hợp vô hạn"
+    ],
+    "correct": 1,
+    "explanation": "Ký hiệu ∅ đại diện cho tập hợp rỗng, tức là tập hợp không chứa phần tử nào.",
+    "difficulty": "easy",
+    "topic": "Lý thuyết tập hợp"
+  },
+  {
+    "id": 2,
+    "question": "Phép toán A ∩ B (giao của A và B) chứa các phần tử nào?",
+    "options": [
+      "Tất cả phần tử trong A hoặc B",
+      "Chỉ các phần tử trong A",
+      "Chỉ các phần tử trong B",
+      "Các phần tử nằm trong cả A và B"
+    ],
+    "correct": 3,
+    "explanation": "Phép giao A ∩ B chứa các phần tử thuộc cả hai tập A và B.",
+    "difficulty": "easy",
+    "topic": "Phép toán tập hợp"
+  },
+  {
+    "id": 3,
+    "question": "Trong logic mệnh đề, mệnh đề nào sau đây là đúng khi P sai và Q đúng?",
+    "options": [
+      "P ∧ Q (P và Q)",
+      "P ∨ Q (P hoặc Q)",
+      "P → Q (P kéo theo Q)",
+      "P ↔ Q (P nếu và chỉ nếu Q)"
+    ],
+    "correct": 1,
+    "explanation": "P ∨ Q đúng khi ít nhất một trong P hoặc Q đúng. Trong trường hợp này, Q đúng nên P ∨ Q đúng.",
+    "difficulty": "medium",
+    "topic": "Logic mệnh đề"
+  },
+  {
+    "id": 4,
+    "question": "Trong một đồ thị, đỉnh có bậc lẻ là đỉnh có:",
+    "options": [
+      "Số cạnh kết nối là số lẻ",
+      "Số cạnh kết nối là số chẵn",
+      "Không có cạnh kết nối",
+      "Chỉ có một cạnh kết nối"
+    ],
+    "correct": 0,
+    "explanation": "Bậc của một đỉnh là số cạnh nối với đỉnh đó. Nếu số cạnh là số lẻ thì đỉnh đó có bậc lẻ.",
+    "difficulty": "medium",
+    "topic": "Lý thuyết đồ thị"
+  },
+  {
+    "id": 5,
+    "question": "Trong phép đếm, công thức tính số tổ hợp chập k của n phần tử là:",
+    "options": [
+      "n! / (k!(n-k)!)",
+      "n! / (n-k)!",
+      "n^k",
+      "k! / (n-k)!"
+    ],
+    "correct": 0,
+    "explanation": "Số tổ hợp chập k của n phần tử được tính bằng công thức C(n,k) = n! / (k!(n-k)!)",
+    "difficulty": "hard",
+    "topic": "Tổ hợp"
+  },
+  {
+    "id": 6,
+    "question": "Trong lý thuyết số, nếu a ≡ b (mod m), thì điều gì sau đây là đúng?",
+    "options": [
+      "a và b có cùng số dư khi chia cho m",
+      "a và b là số nguyên tố cùng nhau",
+      "a và b đều chia hết cho m",
+      "a và b là hai số bằng nhau"
+    ],
+    "correct": 0,
+    "explanation": "a ≡ b (mod m) nghĩa là a và b có cùng số dư khi chia cho m, hay m chia hết cho (a-b).",
+    "difficulty": "hard",
+    "topic": "Lý thuyết số"
+  }
+]

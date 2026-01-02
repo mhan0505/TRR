@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎵 Test Progress Bar</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #f0f0f0;
+        }
+        .demo-container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        h2 { text-align: center; color: #333; }
+        
+        /* Copy CSS từ file chính */
+        .progress-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        
+        .progress-time {
+            font-size: 0.7em;
+            color: #7f8c8d;
+            min-width: 35px;
+        }
+        
+        .progress-slider {
+            flex: 1;
+            height: 4px;
+            background: #ecf0f1;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+        
+        .progress-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #e74c3c;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .controls { 
+            text-align: center; 
+            margin: 20px 0; 
+        }
+        button { 
+            margin: 5px; 
+            padding: 8px 15px; 
+            border: none; 
+            background: #3498db; 
+            color: white; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        button:hover { background: #2980b9; }
+        
+        audio { 
+            width: 100%; 
+            margin: 10px 0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h2>🎵 Test Music Progress Bar</h2>
+        
+        <!-- Test với nhạc local -->
+        <audio id="testAudio" controls>
+            <source src="../music/background1.mp3" type="audio/mpeg">
+            Test file not found
+        </audio>
+        
+        <!-- Progress Bar như trong file chính -->
+        <div class="progress-control">
+            <span class="progress-time" id="currentTime">0:00</span>
+            <input type="range" id="progressBar" class="progress-slider" min="0" max="100" value="0">
+            <span class="progress-time" id="duration">0:00</span>
+        </div>
+        
+        <div class="controls">
+            <button onclick="testPlay()">▶️ Play</button>
+            <button onclick="testPause()">⏸️ Pause</button>
+            <button onclick="testSeek(25)">⏩ 25%</button>
+            <button onclick="testSeek(50)">⏩ 50%</button>
+            <button onclick="testSeek(75)">⏩ 75%</button>
+        </div>
+        
+        <div style="font-size: 0.8em; color: #666; text-align: center;">
+            ✅ Kéo thanh đỏ để chuyển thời gian<br>
+            ✅ Thời gian hiện tại / Tổng thời gian<br>
+            ✅ Tự động cập nhật khi phát nhạc
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('testAudio');
+        const progressBar = document.getElementById('progressBar');
+        const currentTime = document.getElementById('currentTime');
+        const duration = document.getElementById('duration');
+        
+        // Format time helper
+        function formatTime(seconds) {
+            if (isNaN(seconds) || seconds < 0) return '0:00';
+            
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            if (!audio.duration) return;
+            
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.value = progress;
+            currentTime.textContent = formatTime(audio.currentTime);
+        }
+        
+        // Update duration when metadata loads
+        audio.addEventListener('loadedmetadata', () => {
+            duration.textContent = formatTime(audio.duration);
+            console.log('Duration loaded:', audio.duration);
+        });
+        
+        // Update progress during playback
+        audio.addEventListener('timeupdate', updateProgress);
+        
+        // Seek when user drags slider
+        progressBar.addEventListener('input', (e) => {
+            if (audio.duration) {
+                const seekTime = (e.target.value / 100) * audio.duration;
+                audio.currentTime = seekTime;
+                console.log('Seeking to:', formatTime(seekTime));
+            }
+        });
+        
+        // Test functions
+        function testPlay() {
+            audio.play().then(() => {
+                console.log('✅ Playing');
+            }).catch(e => {
+                console.log('❌ Play failed:', e);
+            });
+        }
+        
+        function testPause() {
+            audio.pause();
+            console.log('⏸️ Paused');
+        }
+        
+        function testSeek(percent) {
+            if (audio.duration) {
+                audio.currentTime = (percent / 100) * audio.duration;
+                console.log(`Seeking to ${percent}%:`, formatTime(audio.currentTime));
+            }
+        }
+        
+        console.log('🎵 Progress Bar Test Ready!');
+    </script>
+</body>
+</html>

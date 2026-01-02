@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎵 Music Path Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        audio { width: 300px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🎵 Music Path Checker - Root Directory</h1>
+    
+    <div class="test-section">
+        <h3>📁 Testing ./music/ paths (for test.html):</h3>
+        <p>Background Music 1:</p>
+        <audio controls>
+            <source src="./music/background1.mp3" type="audio/mpeg">
+            ❌ File not found: ./music/background1.mp3
+        </audio>
+        
+        <p>Ambient Music 1:</p>
+        <audio controls>
+            <source src="./music/ambient1.mp3" type="audio/mpeg">
+            ❌ File not found: ./music/ambient1.mp3
+        </audio>
+        
+        <p>Focus Music 1:</p>
+        <audio controls>
+            <source src="./music/focus1.mp3" type="audio/mpeg">
+            ❌ File not found: ./music/focus1.mp3
+        </audio>
+    </div>
+
+    <script>
+        // Kiểm tra file tự động
+        function checkFile(path) {
+            return fetch(path, {method: 'HEAD'})
+                .then(response => response.ok)
+                .catch(() => false);
+        }
+
+        const filesToCheck = [
+            './music/background1.mp3',
+            './music/background2.mp3', 
+            './music/background3.mp3',
+            './music/ambient1.mp3',
+            './music/ambient2.mp3',
+            './music/ambient3.mp3',
+            './music/focus1.mp3',
+            './music/focus2.mp3',
+            './music/focus3.mp3'
+        ];
+
+        console.log('🔍 Checking music files from root directory...');
+        
+        filesToCheck.forEach(file => {
+            checkFile(file).then(exists => {
+                console.log(exists ? `✅ Found: ${file}` : `❌ Missing: ${file}`);
+            });
+        });
+    </script>
+</body>
+</html>
