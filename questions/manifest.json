@@ -1,0 +1,64 @@
+{
+  "quizzes": [
+    {
+      "id": "data-structures-basics",
+      "name": "🗂️ Data Structures - Basics",
+      "file": "questions/data-structures/basics.json",
+      "subject": "data-structures",
+      "lesson": "basics",
+      "questionCount": 3,
+      "description": "3 câu hỏi về Basics"
+    },
+    {
+      "id": "data-structures-test",
+      "name": "🗂️ Data Structures - Test",
+      "file": "questions/data-structures/test.json",
+      "subject": "data-structures",
+      "lesson": "test",
+      "questionCount": 3,
+      "description": "3 câu hỏi về Test"
+    },
+    {
+      "id": "macroeconomics-gdp-cpi",
+      "name": "📊 Macroeconomics - Gdp Cpi",
+      "file": "questions/macroeconomics/gdp-cpi.json",
+      "subject": "macroeconomics",
+      "lesson": "gdp-cpi",
+      "questionCount": 3,
+      "description": "3 câu hỏi về Gdp Cpi"
+    },
+    {
+      "id": "python-basics",
+      "name": "🐍 Python - Basics",
+      "file": "questions/python/basics.json",
+      "subject": "python",
+      "lesson": "basics",
+      "questionCount": 14,
+      "description": "14 câu hỏi về Basics"
+    }
+  ],
+  "subjects": {
+    "data-structures": {
+      "name": "Data Structures",
+      "emoji": "🗂️",
+      "quizzes": [
+        "data-structures-basics",
+        "data-structures-test"
+      ]
+    },
+    "macroeconomics": {
+      "name": "Macroeconomics",
+      "emoji": "📊",
+      "quizzes": [
+        "macroeconomics-gdp-cpi"
+      ]
+    },
+    "python": {
+      "name": "Python",
+      "emoji": "🐍",
+      "quizzes": [
+        "python-basics"
+      ]
+    }
+  }
+}

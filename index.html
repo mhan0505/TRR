@@ -790,12 +790,80 @@
             font-family: monospace;
             font-weight: bold;
         }
+        
+        /* QUIZ SELECTOR */
+        .quiz-selector {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .quiz-selector label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quiz-select {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 2px solid #3498db;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .quiz-select:hover {
+            border-color: #2980b9;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .quiz-select:focus {
+            outline: none;
+            border-color: #2980b9;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .quiz-select {
+                min-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>_Quiz by mhan_</h1>
         <p class="subtitle">10 van cau hoi vi sao</p>
+        
+        <!-- QUIZ SELECTOR - AUTO-POPULATED FROM MANIFEST -->
+        <div class="quiz-selector">
+            <label for="quizSelect">
+                📚 Chọn bộ câu hỏi:
+            </label>
+            <select id="quizSelect" class="quiz-select">
+                <option value="">-- Mặc định (câu hỏi trong code) --</option>
+                <!-- Options will be auto-generated from manifest.json -->
+            </select>
+        </div>
         
         <div class="header-stats">
             <div class="stat-card">
@@ -951,9 +1019,163 @@
     </div>
 
     <script>
+        // ===== DYNAMIC QUIZ LOADER =====
+        
+        // Available quiz files - AUTO-LOADED FROM MANIFEST
+        let availableQuizzes = {};
+        let quizManifest = null;
+        
+        // Load manifest and populate quiz registry
+        async function loadManifest() {
+            try {
+                const response = await fetch('questions/manifest.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load manifest: ${response.status}`);
+                }
+                
+                quizManifest = await response.json();
+                
+                // Convert manifest to availableQuizzes format
+                quizManifest.quizzes.forEach(quiz => {
+                    availableQuizzes[quiz.id] = {
+                        name: quiz.name,
+                        file: quiz.file,
+                        description: quiz.description,
+                        subject: quiz.subject,
+                        questionCount: quiz.questionCount
+                    };
+                });
+                
+                console.log(`✅ Loaded manifest: ${quizManifest.quizzes.length} quizzes from ${Object.keys(quizManifest.subjects).length} subjects`);
+                
+                // Populate dropdown dynamically
+                populateQuizDropdown();
+                
+                return true;
+            } catch (error) {
+                console.error('❌ Failed to load manifest:', error);
+                alert('Không thể load danh sách quiz. Vui lòng chạy: python generate_manifest.py');
+                return false;
+            }
+        }
+        
+        // Populate dropdown from manifest
+        function populateQuizDropdown() {
+            const quizSelect = document.getElementById('quizSelect');
+            if (!quizSelect || !quizManifest) return;
+            
+            // Clear existing options (keep default)
+            quizSelect.innerHTML = '<option value="">-- Mặc định (câu hỏi trong code) --</option>';
+            
+            // Group by subject
+            Object.entries(quizManifest.subjects).forEach(([subjectKey, subjectData]) => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = `${subjectData.emoji} ${subjectData.name}`;
+                
+                // Add quizzes for this subject
+                subjectData.quizzes.forEach(quizId => {
+                    const quiz = quizManifest.quizzes.find(q => q.id === quizId);
+                    if (quiz) {
+                        const option = document.createElement('option');
+                        option.value = quiz.id;
+                        option.textContent = `${quiz.lesson.replace('-', ' ')} (${quiz.questionCount} câu)`;
+                        optgroup.appendChild(option);
+                    }
+                });
+                
+                quizSelect.appendChild(optgroup);
+            });
+            
+            console.log('✅ Dropdown populated with', quizManifest.quizzes.length, 'quizzes');
+        }
+        
+        // Function to load quiz from JSON
+        async function loadQuizFromJSON(quizKey) {
+            const quiz = availableQuizzes[quizKey];
+            if (!quiz) {
+                console.error(`Quiz "${quizKey}" not found!`);
+                return false;
+            }
+            
+            try {
+                showLoadingIndicator(`Đang tải ${quiz.name}...`);
+                
+                console.log(`🔄 Attempting to fetch: ${quiz.file}`);
+                console.log(`📍 Current URL: ${window.location.href}`);
+                console.log(`📂 Base URL: ${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}`);
+                
+                const response = await fetch(quiz.file);
+                console.log(`📥 Response status: ${response.status}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const loadedQuestions = await response.json();
+                console.log(`✅ Parsed ${loadedQuestions.length} questions from JSON`);
+                
+                // Validate loaded questions
+                if (!Array.isArray(loadedQuestions) || loadedQuestions.length === 0) {
+                    throw new Error('Invalid questions format');
+                }
+                
+                // Update global questions array
+                questions.length = 0;
+                questions.push(...loadedQuestions);
+                
+                console.log(`✅ Loaded ${questions.length} questions from ${quiz.name}`);
+                
+                hideLoadingIndicator();
+                
+                // Reinitialize quiz
+                if (validateQuestions()) {
+                    restartQuiz();
+                    return true;
+                }
+                
+                return false;
+                
+            } catch (error) {
+                console.error('Failed to load quiz:', error);
+                hideLoadingIndicator();
+                alert(`Không thể tải quiz: ${error.message}\n\nKiểm tra:\n- File có tồn tại?\n- Định dạng JSON đúng?\n- Đường dẫn chính xác?`);
+                return false;
+            }
+        }
+        
+        // Loading indicator helpers
+        function showLoadingIndicator(message) {
+            const loader = document.createElement('div');
+            loader.id = 'quiz-loader';
+            loader.innerHTML = `
+                <div style="position:fixed;top:0;left:0;width:100%;height:100%;
+                            background:rgba(0,0,0,0.7);z-index:9999;
+                            display:flex;align-items:center;justify-content:center;">
+                    <div style="background:white;padding:30px;border-radius:15px;text-align:center;">
+                        <div style="font-size:3em;margin-bottom:15px;">⏳</div>
+                        <div style="font-size:1.2em;color:#2c3e50;">${message}</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(loader);
+        }
+        
+        function hideLoadingIndicator() {
+            const loader = document.getElementById('quiz-loader');
+            if (loader) loader.remove();
+        }
+        
+        // Auto-load quiz from URL parameter
+        // Usage: index.html?quiz=python-basics
+        const urlParams = new URLSearchParams(window.location.search);
+        const quizParam = urlParams.get('quiz');
+        
+        // ===== END DYNAMIC QUIZ LOADER =====
+        
         // Comprehensive 100+ questions data
         // thêm câu hỏi ở đây
-const questions = [
+        // DEFAULT QUESTIONS (fallback)
+let questions = [
     {
         id: 1,
         question: "Làm thế nào để viết một chú thích nhiều dòng trong Python? (chú thích = comment)",
@@ -2205,13 +2427,56 @@ while count < 10:
         };
         
         // Khởi tạo toàn bộ ứng dụng khi trang load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
+            // KIỂM TRA FILE PROTOCOL WARNING
+            if (window.location.protocol === 'file:') {
+                const warningDiv = document.createElement('div');
+                warningDiv.innerHTML = `
+                    <div style="position:fixed;top:0;left:0;width:100%;background:#e74c3c;color:white;padding:15px;text-align:center;z-index:99999;box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                        <strong>⚠️ CẢNH BÁO:</strong> Bạn đang mở file trực tiếp (file://).<br>
+                        Quiz Selector sẽ KHÔNG hoạt động do CORS policy.<br>
+                        <strong>Hãy chạy HTTP server:</strong> <code style="background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:4px;">python -m http.server 8000</code><br>
+                        Sau đó mở: <code style="background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:4px;">http://localhost:8000/index.html</code>
+                    </div>
+                `;
+                document.body.insertBefore(warningDiv, document.body.firstChild);
+                console.error('⚠️ File protocol detected! Quiz selector will not work. Use HTTP server instead.');
+            }
+            
+            // Load manifest first
+            const manifestLoaded = await loadManifest();
+            
+            if (!manifestLoaded) {
+                console.warn('⚠️ Manifest not loaded, using default questions only');
+            }
+            
+            // Setup quiz selector
+            const quizSelect = document.getElementById('quizSelect');
+            if (quizSelect) {
+                quizSelect.addEventListener('change', async function(e) {
+                    const quizKey = e.target.value;
+                    if (quizKey) {
+                        await loadQuizFromJSON(quizKey);
+                    } else {
+                        // Reset to default questions
+                        location.reload();
+                    }
+                });
+            }
+            
+            // Auto-load quiz from URL parameter
+            if (quizParam && availableQuizzes[quizParam]) {
+                await loadQuizFromJSON(quizParam);
+                if (quizSelect) quizSelect.value = quizParam;
+            }
+            
+            // Validate and init
             if (validateQuestions()) {
                 setupEventListeners();
                 initQuiz();
                 musicPlayer.init();
             } else {
-                document.body.innerHTML = '<div style="text-align:center;padding:50px;color:#e74c3c;"><h1>❌ Lỗi: Quiz không có dữ liệu hợp lệ!</h1><p>Vui lòng kiểm tra array questions.</p></div>';
+                document.body.innerHTML = '<div style="text-align:center;padding:50px;color:#e74c3c;"><h1>❌ Lỗi: Quiz không có dữ liệu hợp lệ!</h1><p>Vui lòng kiểm tra array questions hoặc chọn quiz từ dropdown.</p></div>';
             }
         });
         // DEBUG: Test Challenge Mode
