@@ -307,20 +307,7 @@
 "difficulty": "hard",
 "topic": "VẬT CHẤT TRONG ĐIỆN TRƯỜNG"
 },
-{
-"id": 23,
-"question": "Tụ phẳng không khí d=2mm. Đưa tấm kim loại dày a=1mm vào giữa. Điện dung mới so với cũ:",
-"options": [
-"C = 4,43 nF",
-"C = 8,86 nF",
-"C = 6,88 nF",
-"C = 2,95 nF"
-],
-"correct": 1,
-"explanation": "Khi đưa kim loại vào, khoảng cách hiệu dụng giảm còn d' = d - a = 1mm. Điện dung tăng gấp đôi. C_mới = 2 * C_cũ = 8.86 nF.",
-"difficulty": "medium",
-"topic": "VẬT CHẤT TRONG ĐIỆN TRƯỜNG"
-},
+
 {
 "id": 24,
 "question": "Khi phân cực điện môi không đồng chất:",
@@ -560,7 +547,7 @@
 "topic": "TỪ TRƯỜNG"
 },
 
-    {
+    {   
         "id": 41,
         "question": "Từ trường của dòng điện tròn I1 tác dụng lực từ lên một đoạn dòng điện I2 đủ nhỏ, đặt trên trục và vuông góc với trục của vòng dây tròn như hình (I1 gây ra từ trường B hướng dọc trục, I2 vuông góc trục). Hình nào mô tả đúng lực từ F?",
         "options": ["Hình a", "Hình b", "Hình c", "Hình d"],
