@@ -1,64 +1,62 @@
 {
   "quizzes": [
     {
-      "id": "data-structures-basics",
-      "name": "🗂️ Data Structures - Basics",
-      "file": "questions/data-structures/basics.json",
-      "subject": "data-structures",
-      "lesson": "basics",
-      "questionCount": 3,
-      "description": "3 câu hỏi về Basics"
+      "id": "MP-mp",
+      "name": "📚 Mp - Mp",
+      "file": "questions/MP/mp.json",
+      "subject": "MP",
+      "lesson": "mp",
+      "questionCount": 91,
+      "description": "91 câu hỏi về Mp"
     },
     {
-      "id": "data-structures-test",
-      "name": "🗂️ Data Structures - Test",
-      "file": "questions/data-structures/test.json",
-      "subject": "data-structures",
-      "lesson": "test",
-      "questionCount": 3,
-      "description": "3 câu hỏi về Test"
-    },
-    {
-      "id": "macroeconomics-gdp-cpi",
-      "name": "📊 Macroeconomics - Gdp Cpi",
-      "file": "questions/macroeconomics/gdp-cpi.json",
-      "subject": "macroeconomics",
-      "lesson": "gdp-cpi",
-      "questionCount": 3,
-      "description": "3 câu hỏi về Gdp Cpi"
-    },
-    {
-      "id": "python-basics",
-      "name": "🐍 Python - Basics",
-      "file": "questions/python/basics.json",
-      "subject": "python",
-      "lesson": "basics",
-      "questionCount": 14,
-      "description": "14 câu hỏi về Basics"
+      "id": "MP-mp1",
+      "name": "📚 Mp - Mp1",
+      "file": "questions/MP/mp1.json",
+      "subject": "MP",
+      "lesson": "mp1",
+      "questionCount": 91,
+      "description": "91 câu hỏi về Mp1"
     }
   ],
   "subjects": {
-    "data-structures": {
-      "name": "Data Structures",
-      "emoji": "🗂️",
+    "Database Management System": {
+      "name": "Database Management System",
+      "emoji": "📚",
+      "quizzes": []
+    },
+    "DSA": {
+      "name": "Dsa",
+      "emoji": "📚",
+      "quizzes": []
+    },
+    "Econometric": {
+      "name": "Econometric",
+      "emoji": "📚",
+      "quizzes": []
+    },
+    "Lich su dang": {
+      "name": "Lich Su Dang",
+      "emoji": "📚",
+      "quizzes": []
+    },
+    "MP": {
+      "name": "Mp",
+      "emoji": "📚",
       "quizzes": [
-        "data-structures-basics",
-        "data-structures-test"
+        "MP-mp",
+        "MP-mp1"
       ]
     },
-    "macroeconomics": {
-      "name": "Macroeconomics",
-      "emoji": "📊",
-      "quizzes": [
-        "macroeconomics-gdp-cpi"
-      ]
+    "Ngan hang thuong mai": {
+      "name": "Ngan Hang Thuong Mai",
+      "emoji": "📚",
+      "quizzes": []
     },
-    "python": {
-      "name": "Python",
-      "emoji": "🐍",
-      "quizzes": [
-        "python-basics"
-      ]
+    "Principle of accounting": {
+      "name": "Principle Of Accounting",
+      "emoji": "📚",
+      "quizzes": []
     }
   }
 }

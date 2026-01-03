@@ -25,6 +25,13 @@ def generate_manifest():
         'calculus': '📐',
         'statistics': '📈',
         'algorithms': '⚙️',
+        'mp': '💼',
+        'econometric': '📈',
+        'dsa': '🔢',
+        'database management system': '💾',
+        'lich su dang': '📚',
+        'ngan hang thuong mai': '🏦',
+        'principle of accounting': '📊',
         'default': '📚'
     }
     
